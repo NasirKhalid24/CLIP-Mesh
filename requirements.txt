@@ -1,0 +1,17 @@
+clip @ git+https://github.com/openai/CLIP.git@b46f5ac7587d2e1862f8b7b1573179d80dcdd620
+imageio
+cython
+imageio-ffmpeg
+kornia
+numpy
+nvdiffrast @ git+https://github.com/NVlabs/nvdiffrast.git@78528e683210dfaa1be57e3c65aa37d3b36c6644
+Pillow
+PyGLM
+resize-right
+scipy
+smplx
+torch==1.11.0
+torchvision==0.12.0
+tqdm
+Ninja
+pyyaml

@@ -1,0 +1,92 @@
+# This config was used for figures in the paper
+
+# Basic
+output_path: "./output/" # Where to save outputs
+gpu: '0'                 # Which GPU to use
+seed: 99                 # Seed for reproducibility
+
+# CLIP Related
+text_prompt: Pyramid of Giza                                # CLIP text prompt
+clip_model: ViT-B/32                                        # Which CLIP Model to use see available_models on OPENAI Clip repo
+
+# Text-Image Prior Related
+prior_path:  weights/model.pth            # Path to weights for the prior network, not used if prior_path empty
+# prior_path:                             # Leave empty like this to use only text prompt
+
+## Parameters for diffusion prior network (code by lucidrains)
+diffusion_prior_network_dim: 512
+diffusion_prior_network_depth: 12
+diffusion_prior_network_dim_head: 64
+diffusion_prior_network_heads: 12
+diffusion_prior_network_normformer: false
+
+## Parameters for diffusion prior (code by lucidrains)
+diffusion_prior_embed_dim: 512
+diffusion_prior_timesteps: 1000
+diffusion_prior_cond_drop_prob: 0.1
+diffusion_prior_loss_type: l2
+diffusion_prior_condition_on_text_encodings: false
+
+# Parameters
+epochs: 5000             # Number of optimization steps
+lr: 0.01                 # Maximum learning rate
+batch_size: 25           # How many images of shape are rendered at one epoch
+train_res: 512           # Resolution of render before scaling to 224x224
+resize_method: lanczos2  # Method for resizing from cubic, linear, lanczos2, lanczos3
+bsdf: diffuse            # diffuse or pbr (diffuse recommended)
+texture_resolution: 512  # Resolution of texture maps (ex: 512x512)
+channels: 4              # Texture map image channels (4 for alpha, 3 for RGB only)
+init_c: 0.85             # Initial alpha channel value if channels == 4
+kernel_size: 5          # Kernel size for gaussian blurring of textures to reduce artifacts
+blur_sigma: 3            # Variance of gaussian kernel for blurring of textures
+shape_imgs_frac: 0.5     # What % of epochs should the renders include plain shape renders as well as textures - after which only textured renders are done
+aug_light: true          # Augment the direction of light around the camera
+aug_bkg: true            # Augment the background
+diff_loss_weight: 0.33   # Weight of Diffusion prior loss 
+clip_weight: 1.0         # Weight of CLIP Text loss
+laplacian_weight: 30.0   # Initial uniform laplacian weight
+laplacian_min: 0.6       # Minimum uniform laplacian weight (set to 2% of max usually)
+
+# Camera Parameters
+fov_min: 30.0            # Minimum camera field of view angle during renders 
+fov_max: 90.0            # Maximum camera field of view angle during renders 
+dist_min: 5.0            # Minimum distance of camera from mesh during renders
+dist_max: 12.0           # Maximum distance of camera from mesh during renders
+light_power: 5.0         # Light intensity
+elev_alpha: 1.0          # Alpha parameter for Beta distribution for elevation sampling
+elev_beta: 5.0           # Beta parameter for Beta distribution for elevation sampling
+elev_max: 90.0           # Maximum elevation angle
+azim_min: 0.0            # Minimum azimuth angle
+azim_max: 360.0          # Maximum azimuth angle
+aug_loc: true            # Offset mesh from center of image?
+
+# Logging Parameters
+log_interval: 5          # Interval for logging
+log_interval_im: 250     # Image logging interval
+log_elev: 30.0           # Logging elevation angle
+log_fov: 60.0            # Logging field of view
+log_dist: 10.0           # Logging distance from object
+log_res: 512             # Logging render resolution
+log_light_power: 3.0     # Light intensity for logging
+
+# Mesh Parameters
+
+## Add meshes to the scene here
+meshes: 
+  - primitives/sphere.obj
+
+## Unit scale the meshes?
+unit: 
+  - true
+
+## What parameters to optimize for each mesh or none at all (vertices, texture map, normal map, true for random texture; false for using defined texture) ?
+train_mesh_idx:
+  - [verts, texture, normal, true]
+
+## Scale mesh size by some value
+scales:
+  - 1.0
+
+## After scaling (x, y, z) offset vertices (note that axis are +x, -y, +z)
+offsets:
+  - [0.0, 0.0,  0.0]
