@@ -1,0 +1,9 @@
+[submodule "loop_limitation"]
+	path = loop_limitation
+	url = https://github.com/tianhaoxie/loop_limitation
+[submodule "DALLE2-pytorch"]
+	path = DALLE2-pytorch
+	url = https://github.com/lucidrains/DALLE2-pytorch.git
+[submodule "nvdiffmodeling"]
+	path = nvdiffmodeling
+	url = https://github.com/NVlabs/nvdiffmodeling
