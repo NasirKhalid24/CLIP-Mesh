@@ -6,7 +6,7 @@ Official implementation of [**CLIP-Mesh: Generating textured meshes from text us
 [Tianhao Xie](https://www.linkedin.com/in/tianhao-xie-440b20186/),
 [Eugene Belilovsky](http://eugenium.github.io/),
 [Tiberiu Popa](https://users.encs.concordia.ca/~stpopa/index.html)<br/>
-_[SIGGRAPH ASIA 2022]() | [arXiv](https://arxiv.org/abs/2112.10752) | [Project page](https://www.nasir.lol/clipmesh)_
+_[SIGGRAPH ASIA 2022]() | [arXiv](https://arxiv.org/abs/2203.13333) | [Project page](https://www.nasir.lol/clipmesh)_
 
 ![CLIP-Mesh header image](./assets/header.jpeg)
 
