@@ -1,10 +1,26 @@
 ## CLIP-Mesh
 
-Official implementation of CLIP-Mesh: Generating textured meshes from text using pretrained image-text models
+Official implementation of [**CLIP-Mesh: Generating textured meshes from text using pretrained image-text models**](https://www.nasir.lol/clipmesh)<br/>
+
+[Nasir Mohammad Khalid](https://www.nasir.lol/),
+[Tianhao Xie](https://www.linkedin.com/in/tianhao-xie-440b20186/),
+[Eugene Belilovsky](http://eugenium.github.io/),
+[Tiberiu Popa](https://users.encs.concordia.ca/~stpopa/index.html)<br/>
+_[SIGGRAPH ASIA 2022]() | [arXiv](https://arxiv.org/abs/2112.10752) | [Project page](https://www.nasir.lol/clipmesh)_
+
+![CLIP-Mesh header image](./assets/header.jpeg)
 
 ## Quickstart
 
-The following Google Collab notebooks are the best way to get started
+(Work in Progress!) - The following Google Collab notebooks are the best way to get started:
+
+|<img src="./assets/single.gif" width="310"/>|<img src="./assets/multi.gif" width="310"/>|
+|:-----------------------------------------------------------------------------------------------------------:|:--------------------------------------------------:|
+| [Text to Mesh]()| [Multi Mesh Generation]() |
+
+|<img src="./assets/cow.gif" width="310"/>|<img src="./assets/smpl.gif" width="310"/>|
+|:-----------------------------------------------------------------------------------------------------------:|:--------------------------------------------------:|
+| [Stylizing a Mesh]()| [Apply CLIP-Mesh to Human Models](https://github.com/NasirKhalid24/CLIP-Mesh-SMPLX)|
 
 ## Setup
 

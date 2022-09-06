@@ -105,6 +105,7 @@ def loop(cfg):
     meshes = [] # store Mesh objects
     subdiv = [] # store per mesh limit subdivison
     train_params = [] # store all trainable paramters
+    vert_train = False
 
     for idx, m in enumerate(cfg["meshes"]): # Loop over each mesh path
 
@@ -166,6 +167,7 @@ def loop(cfg):
         # Training parameters
         if "verts" in cfg["train_mesh_idx"][idx]:
             train_params += [vertices]
+            vert_train = True
         if "texture" in cfg["train_mesh_idx"][idx]:
             train_params += texture_map.getMips()
         if "normal" in cfg["train_mesh_idx"][idx]:
@@ -209,7 +211,8 @@ def loop(cfg):
         [cfg["fov_min"], cfg["fov_max"]],
         cfg["aug_loc"],
         cfg["aug_light"],
-        cfg["aug_bkg"]
+        cfg["aug_bkg"],
+        cfg["batch_size"]
     )
 
     cams = torch.utils.data.DataLoader(
@@ -282,7 +285,7 @@ def loop(cfg):
                 base=m # gets uvs etc from here
             )
             
-            if it < cfg["epochs"] * cfg["shape_imgs_frac"]:
+            if it < cfg["epochs"] * cfg["shape_imgs_frac"] and vert_train:
 
                 # Initialize the no texture mesh
                 kd_notex = torch.full_like( ready_texture.data, 0.5)
@@ -317,7 +320,7 @@ def loop(cfg):
         complete_scene = mesh.auto_normals(complete_scene)
         complete_scene = mesh.compute_tangents(complete_scene)
 
-        if it < cfg["epochs"] * cfg["shape_imgs_frac"]:
+        if it < cfg["epochs"] * cfg["shape_imgs_frac"] and vert_train:
             complete_scene_notex = create_scene(render_meshes_notex, sz=cfg["texture_resolution"])
             complete_scene_notex = mesh.auto_normals(complete_scene_notex)
             complete_scene_notex = mesh.compute_tangents(complete_scene_notex)
@@ -345,7 +348,7 @@ def loop(cfg):
                     params['lightpos'],
                     cfg["log_light_power"],
                     cfg["log_res"],
-                    num_layers=4,
+                    num_layers=1,
                     background=torch.ones(1, cfg["log_res"], cfg["log_res"], 3).to(device)
                 )
 
@@ -359,7 +362,7 @@ def loop(cfg):
             params_camera[key] = params_camera[key].to(device)
 
         # Render with and without texture to enable shape growth
-        if it < cfg["epochs"] * cfg["shape_imgs_frac"]:
+        if it < cfg["epochs"] * cfg["shape_imgs_frac"] and vert_train:
             
             with_tex = cfg["batch_size"] // 2
 
@@ -386,7 +389,7 @@ def loop(cfg):
                 cfg["light_power"],
                 cfg["train_res"],
                 spp=1, # no upscale here / render at any resolution then use resize_right to downscale
-                num_layers=4,
+                num_layers=cfg["layers"],
                 msaa=False,
                 background=params_camera["bkgs"][:with_tex],
             ).permute(0, 3, 1, 2) # switch to B, C, H, W
@@ -429,7 +432,7 @@ def loop(cfg):
                 cfg["light_power"],
                 cfg["train_res"],
                 spp=1, # no upscale here / render at any resolution then use resize_right to downscale
-                num_layers=4,
+                num_layers=cfg["layers"],
                 msaa=False,
                 background=params_camera["bkgs"],
             ).permute(0, 3, 1, 2) # switch to B, C, H, W
@@ -468,7 +471,7 @@ def loop(cfg):
 
         # Log renders
         if it % cfg["log_interval_im"] == 0:
-            torchvision.utils.save_image(train_render, os.path.join(cfg["path"], 'epoch_%d.png' % it))
+            torchvision.utils.save_image(train_render[torch.randint(low=0, high=cfg["batch_size"], size=(5 if cfg["batch_size"] > 5 else cfg["batch_size"], )) , :, :, :], os.path.join(cfg["path"], 'epoch_%d.png' % it))
 
         # Convert image to image embeddings
         image_embeds = model.encode_image(

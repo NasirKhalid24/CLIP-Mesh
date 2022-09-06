@@ -179,7 +179,8 @@ class CameraBatch(torch.utils.data.Dataset):
         aug_loc, 
         aug_light,
         aug_bkg,
-        look_at=[0, 0, 0], up=[0, -1, 0], bs=25
+        bs,
+        look_at=[0, 0, 0], up=[0, -1, 0]
     ):
 
         self.res = image_resolution

@@ -46,6 +46,7 @@ diff_loss_weight: 0.33   # Weight of Diffusion prior loss
 clip_weight: 1.0         # Weight of CLIP Text loss
 laplacian_weight: 30.0   # Initial uniform laplacian weight
 laplacian_min: 0.6       # Minimum uniform laplacian weight (set to 2% of max usually)
+layers: 2                # Number of layers to peel back for transparency
 
 # Camera Parameters
 fov_min: 30.0            # Minimum camera field of view angle during renders 
