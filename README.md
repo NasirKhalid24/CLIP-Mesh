@@ -16,11 +16,11 @@ _[SIGGRAPH ASIA 2022]() | [arXiv](https://arxiv.org/abs/2203.13333) | [Project p
 
 |<img src="./assets/single.gif" width="310"/>|<img src="./assets/multi.gif" width="310"/>|
 |:-----------------------------------------------------------------------------------------------------------:|:--------------------------------------------------:|
-| [Text to Mesh]()| [Multi Mesh Generation]() |
+| [Text to Mesh](https://colab.research.google.com/drive/15Fm4EhLlB20EugLUnTdhSJElvGVCU7Ys?usp=sharing)| [Multi Mesh Generation](https://colab.research.google.com/drive/12MbQTjiQ6fyCo4x6Gtp119LFksE8PGkW?usp=sharing) |
 
 |<img src="./assets/cow.gif" width="310"/>|<img src="./assets/smpl.gif" width="310"/>|
 |:-----------------------------------------------------------------------------------------------------------:|:--------------------------------------------------:|
-| [Stylizing a Mesh]()| [Apply CLIP-Mesh to Human Models](https://github.com/NasirKhalid24/CLIP-Mesh-SMPLX)|
+| [Stylizing a Mesh](https://colab.research.google.com/drive/1df5yzS2vmqyYko016tVYXYZKt2Hrmy7Q?usp=sharing)| [Apply CLIP-Mesh to Human Models](https://github.com/NasirKhalid24/CLIP-Mesh-SMPLX)|
 
 ## Setup
 
