@@ -350,7 +350,7 @@ def loop(cfg):
                     params['lightpos'],
                     cfg["log_light_power"],
                     cfg["log_res"],
-                    num_layers=1,
+                    num_layers=cfg["layers"],
                     background=torch.ones(1, cfg["log_res"], cfg["log_res"], 3).to(device)
                 )
 
