@@ -69,6 +69,7 @@ log_fov: 60.0            # Logging field of view
 log_dist: 8.0           # Logging distance from object
 log_res: 512             # Logging render resolution
 log_light_power: 3.0     # Light intensity for logging
+colab: false             # Print logging image (only for Google Colab)
 
 # Mesh Parameters
 
