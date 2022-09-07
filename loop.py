@@ -10,11 +10,13 @@ import torchvision
 
 import numpy                as np
 import nvdiffrast.torch     as dr
+import matplotlib.pyplot    as plt
 
 from tqdm                   import tqdm
 from datetime               import datetime
 from dalle2_pytorch         import DiffusionPrior, DiffusionPriorNetwork
 
+from PIL                    import Image
 from utils.video            import Video
 from utils.limit_subdivide  import LimitSubdivide
 from utils.helpers          import cosine_avg, create_scene
@@ -471,7 +473,22 @@ def loop(cfg):
 
         # Log renders
         if it % cfg["log_interval_im"] == 0:
-            torchvision.utils.save_image(train_render[torch.randint(low=0, high=cfg["batch_size"], size=(5 if cfg["batch_size"] > 5 else cfg["batch_size"], )) , :, :, :], os.path.join(cfg["path"], 'epoch_%d.png' % it))
+            
+            s_log = train_render[torch.randint(low=0, high=cfg["batch_size"], size=(5 if cfg["batch_size"] > 5 else cfg["batch_size"], )) , :, :, :]
+
+            # Source code of save_image
+            s_log = torchvision.utils.make_grid(s_log)
+
+            # Add 0.5 after unnormalizing to [0, 255] to round to nearest integer
+            ndarr = s_log.mul(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to("cpu", torch.uint8).numpy()
+            im = Image.fromarray(ndarr)
+
+            if cfg["colab"]:
+                plt.figure()
+                plt.imshow(ndarr)
+                plt.show()
+
+            im.save(os.path.join(cfg["path"], 'epoch_%d.png' % it))
 
         # Convert image to image embeddings
         image_embeds = model.encode_image(
@@ -530,3 +547,5 @@ def loop(cfg):
             out_path,
             m
         )
+
+    return cfg["path"]

@@ -66,9 +66,10 @@ log_interval: 5          # Interval for logging
 log_interval_im: 250     # Image logging interval
 log_elev: 30.0           # Logging elevation angle
 log_fov: 60.0            # Logging field of view
-log_dist: 8.0           # Logging distance from object
+log_dist: 8.0            # Logging distance from object
 log_res: 512             # Logging render resolution
 log_light_power: 3.0     # Light intensity for logging
+colab: false             # Print logging image (only for Google Colab)
 
 # Mesh Parameters
 
