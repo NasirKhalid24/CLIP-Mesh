@@ -36,9 +36,10 @@ def loop(cfg):
     now = datetime.now()
     cfg["path"] = os.path.join(
         cfg["output_path"],
-        now.strftime("%m-%d-%Y_%H:%M:%S") + cfg["text_prompt"]
+        now.strftime("%m-%d-%Y_%H-%M-%S") + cfg["text_prompt"]
     )
-
+    
+    cfg['path'] = cfg['path'].replace(" ", "_")
     os.makedirs(cfg['path'])
     
     with open(os.path.join(cfg["path"], "config.yml"), 'w') as outfile:
